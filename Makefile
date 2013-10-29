@@ -3,16 +3,15 @@ DEPLOY_RUNTIME ?= /kb/runtime
 TARGET ?= /kb/deployment
 include $(TOP_DIR)/tools/Makefile.common
 
-SERVICE_NAME =
-SERVICE_DIR  =
+SERVICE_NAME = mgrast_pipeline
+SERVICE_DIR  = mgrast_pipeline
 
 
 TPAGE_ARGS = --define kb_top=$(TARGET) --define kb_runtime=$(DEPLOY_RUNTIME) --define kb_service_name=$(SERVICE_NAME) --define kb_service_dir=$(SERVICE_DIR)
 
 
-CLIENT_TESTS = $(wildcard client-tests/*.t)
 SCRIPTS_TESTS = $(wildcard script-tests/*.t)
-SERVER_TESTS = $(wildcard server-tests/*.t)
+
 
 default:
 	-rm -r pipeline/*
@@ -20,13 +19,10 @@ default:
 	git submodule update
 
 
-
-
 # Test Section
 
 test: test-scripts
 	@echo "running client and script tests"
-
 
 
 test-scripts:
@@ -41,11 +37,8 @@ test-scripts:
 	done
 
 
-
-deploy: deploy-client
-
-
-deploy-client: deploy-scripts deploy-docs
+deploy: deploy-scripts deploy-docs
+	echo "deploy target not implemented yet"
 
 
 deploy-scripts: deploy-cfg
@@ -61,7 +54,6 @@ deploy-scripts: deploy-cfg
 	done
 
 
-
 deploy-docs: build-docs
 	-mkdir -p $(TARGET)/services/$(SERVICE_DIR)/webroot/.
 	cp docs/*.html $(TARGET)/services/$(SERVICE_DIR)/webroot/.
@@ -69,11 +61,11 @@ deploy-docs: build-docs
 
 build-docs: compile-docs
 	-mkdir -p docs
-	pod2html --infile=lib/Bio/KBase/$(SERVICE_NAME)/Client.pm --outfile=docs/$(SERVICE_NAME).html
-
+	echo "build-docs not implemented yet"
 
 
 compile-docs:
+	echo "compile-docs not implemented yet"
 
 
 include $(TOP_DIR)/tools/Makefile.common.rules
