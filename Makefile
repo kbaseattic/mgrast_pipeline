@@ -39,10 +39,13 @@ test-scripts:
 		fi \
 	done
 
-# over ride SRC_PERL. 
-deploy: SRC_PERL = $(wildcard pipeline/awecmd/*.pl)
-deploy: SRC_PYTHON = $(wildcard pipeline/awecmd/*.py)
-deploy: SRC_SH = $(wildcard pipeline/awecmd/*.sh) 
+# over ride SRC_PERL for deploy and all sub targets
+deploy: SRC_PERL = $(wildcard pipeline/awecmd/*.pl)   \
+                   $(wildcard pipeline/bin/*.pl)
+deploy: SRC_PYTHON = $(wildcard pipeline/awecmd/*.py) \
+                     $(wildcard pipeline/bin/*.py
+deploy: SRC_SH = $(wildcard pipeline/awecmd/*.sh)     \
+                 $(wildcard pipeline/bin/*.sh)
 
 deploy: deploy-scripts deploy-docs
 	echo "deploy target not implemented yet"
