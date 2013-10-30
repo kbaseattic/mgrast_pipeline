@@ -13,8 +13,11 @@ TPAGE_ARGS = --define kb_top=$(TARGET) --define kb_runtime=$(DEPLOY_RUNTIME) --d
 SCRIPTS_TESTS = $(wildcard script-tests/*.t)
 
 
+
+
+
 default:
-	-rm -r pipeline/*
+	-rm -rf pipeline/*
 	git submodule init
 	git submodule update
 
@@ -36,6 +39,9 @@ test-scripts:
 		fi \
 	done
 
+# over ride SRC_PERL. We can't do this until the default target
+# has run the git submodule update. 
+deploy: SRC_PERL = $(wildcard(pipeline/awecmd/*)
 
 deploy: deploy-scripts deploy-docs
 	echo "deploy target not implemented yet"
