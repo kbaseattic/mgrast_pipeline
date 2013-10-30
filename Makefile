@@ -47,21 +47,8 @@ deploy: SRC_PYTHON = $(wildcard pipeline/awecmd/*.py) \
 deploy: SRC_SH = $(wildcard pipeline/awecmd/*.sh)     \
                  $(wildcard pipeline/bin/*.sh)
 
-deploy: deploy-scripts deploy-docs
+deploy: deploy-scripts deploy-docs deploy-cfg
 	echo "deploy target not implemented yet"
-
-
-deploy-scripts: deploy-cfg
-	export KB_TOP=$(TARGET); \
-	export KB_RUNTIME=$(DEPLOY_RUNTIME); \
-	export KB_PERL_PATH=$(TARGET)/lib bash ; \
-	for src in $(SRC_PERL) ; do \
-		basefile=`basename $$src`; \
-		base=`basename $$src .pl`; \
-		echo install $$src $$base ; \
-		cp $$src $(TARGET)/plbin ; \
-		$(WRAP_PERL_SCRIPT) "$(TARGET)/plbin/$$basefile" $(TARGET)/bin/$$base ; \
-	done
 
 
 deploy-docs: build-docs
