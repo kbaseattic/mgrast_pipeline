@@ -13,9 +13,6 @@ TPAGE_ARGS = --define kb_top=$(TARGET) --define kb_runtime=$(DEPLOY_RUNTIME) --d
 SCRIPTS_TESTS = $(wildcard script-tests/*.t)
 
 
-
-
-
 default:
 	-rm -rf pipeline
 	git submodule init
@@ -39,11 +36,12 @@ test-scripts:
 		fi \
 	done
 
+
 # over ride SRC_PERL for deploy and all sub targets
 deploy: SRC_PERL = $(wildcard pipeline/awecmd/*.pl)   \
                    $(wildcard pipeline/bin/*.pl)
 deploy: SRC_PYTHON = $(wildcard pipeline/awecmd/*.py) \
-                     $(wildcard pipeline/bin/*.py
+                     $(wildcard pipeline/bin/*.py)
 deploy: SRC_SH = $(wildcard pipeline/awecmd/*.sh)     \
                  $(wildcard pipeline/bin/*.sh)
 
