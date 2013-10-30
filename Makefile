@@ -17,7 +17,7 @@ SCRIPTS_TESTS = $(wildcard script-tests/*.t)
 
 
 default:
-	-rm -rf pipeline/*
+	-rm -rf pipeline
 	git submodule init
 	git submodule update
 
@@ -39,9 +39,10 @@ test-scripts:
 		fi \
 	done
 
-# over ride SRC_PERL. We can't do this until the default target
-# has run the git submodule update. 
-deploy: SRC_PERL = $(wildcard(pipeline/awecmd/*)
+# over ride SRC_PERL. 
+deploy: SRC_PERL = $(wildcard pipeline/awecmd/*.pl)
+deploy: SRC_PYTHON = $(wildcard pipeline/awecmd/*.py)
+deploy: SRC_SH = $(wildcard pipeline/awecmd/*.sh) 
 
 deploy: deploy-scripts deploy-docs
 	echo "deploy target not implemented yet"
@@ -65,13 +66,9 @@ deploy-docs: build-docs
 	cp docs/*.html $(TARGET)/services/$(SERVICE_DIR)/webroot/.
 
 
-build-docs: compile-docs
+build-docs:
 	-mkdir -p docs
-	echo "build-docs not implemented yet"
-
-
-compile-docs:
-	echo "compile-docs not implemented yet"
+	echo "build-docs not implemented yet" > docs/$(SERVICE_NAME).html
 
 
 include $(TOP_DIR)/tools/Makefile.common.rules
