@@ -17,7 +17,9 @@ default:
 	-rm -rf pipeline
 	git submodule init
 	git submodule update
-
+	-mkdir -p lib
+	-cp pipeline/lib/*.pm lib
+	-cp pipeline/conf/*.pm lib
 
 # Test Section
 
@@ -46,14 +48,13 @@ deploy: SRC_SH = $(wildcard pipeline/awecmd/*.sh)     \
                  $(wildcard pipeline/bin/*.sh)
 deploy: SRC_UNKNOWN = $(filter-out %.sh %.py %.pl, $(wildcard pipeline/bin/*))
 
-deploy: deploy-scripts deploy-docs deploy-cfg
+deploy: deploy-scripts deploy-docs deploy-cfg deploy-lib
 	echo "deploy target not implemented yet"
 
 
 deploy-docs: build-docs
 	-mkdir -p $(TARGET)/services/$(SERVICE_DIR)/webroot/.
 	cp docs/*.html $(TARGET)/services/$(SERVICE_DIR)/webroot/.
-
 
 build-docs:
 	-mkdir -p docs
