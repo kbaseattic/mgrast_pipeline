@@ -1,0 +1,82 @@
+    {
+        "info": {
+            "pipeline": "kbase-test",
+            "name": "#jobname",
+            "project": "#project",
+            "user": "#user",
+            "clientgroups":"#clientgroups"
+        }, 
+        "tasks": [
+            {
+                "cmd": {
+                    "args": "-input=@#inputfile -output=#jobname.prep.fna", 
+                    "description": "preprocess", 
+                    "name": "awe_preprocess.pl"
+                }, 
+                "dependsOn": [], 
+                "inputs": {
+                   "#inputfile": {
+                        "host": "http://#shockurl",
+                        "node": "#shocknode"
+                    }
+                }, 
+                "outputs": {
+                    "#jobname.prep.fna": {
+                        "host": "http://#shockurl"
+                    }
+                },
+                "partinfo": {
+                     "input": "#inputfile",
+                     "output": "#jobname.prep.fna"
+                },
+                "taskid": "0", 
+                "totalwork": 1
+            },
+            {
+                "cmd": {
+                    "args": "-input=@#jobname.prep.fna -output=#jobname.derep.fna", 
+                    "description": "dereplication", 
+                    "name": "awe_dereplicate.pl"
+                }, 
+                "dependsOn": ["0"], 
+                "inputs": {
+                   "#jobname.prep.fna": {
+                        "host": "http://#shockurl",
+                        "origin": "0"
+                    }
+                }, 
+                "outputs": {
+                    "#jobname.derep.fna": {
+                        "host": "http://#shockurl"
+                    }
+                },
+                "taskid": "1", 
+                "totalwork": 1
+            },
+            {
+                "cmd": {
+                    "args": "-input=@#jobname.derep.fna -output=#jobname.screened.fna -index=h_sapiens_asm",
+                    "description": "bowtie screen", 
+                    "name": "awe_bowtie_screen.pl"
+                }, 
+                "dependsOn": ["1"], 
+                "inputs": {
+                   "#jobname.derep.fna": {
+                        "host": "http://#shockurl",
+                        "origin": "1"
+                    }
+                }, 
+                "outputs": {
+                    "#jobname.screened.fna": {
+                        "host": "http://#shockurl"
+                    }
+                },
+                "partinfo": {
+                     "input": "#jobname.derep.fna",
+                     "output": "#jobname.screened.fna"
+                },
+                "taskid": "2", 
+                "totalwork": #totalwork
+            }
+	]
+    }

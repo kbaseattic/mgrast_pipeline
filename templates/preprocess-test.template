@@ -1,0 +1,37 @@
+    {
+        "info": {
+            "pipeline": "mgrast-prod",
+            "name": "#jobname",
+            "project": "#project",
+            "user": "#user",
+            "clientgroups":"#clientgroups"
+        }, 
+        "tasks": [
+            {
+                "cmd": {
+                    "args": "-input=@#inputfile -output=#jobname.prep.fna", 
+                    "description": "preprocess", 
+                    "name": "awe_preprocess.pl"
+                }, 
+                "dependsOn": [], 
+                "inputs": {
+                   "#inputfile": {
+                        "host": "http://#shockurl",
+                        "node": "#shocknode"
+                    }
+                }, 
+                "outputs": {
+                    "#jobname.prep.fna": {
+                        "host": "http://#shockurl"
+                    }
+                },
+                "partinfo": {
+                     "input": "#inputfile",
+                     "output": "#jobname.prep.fna"
+                },
+                "taskid": "0", 
+                "totalwork": 1
+            }
+	]
+    }
+
