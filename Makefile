@@ -31,13 +31,7 @@ test-scripts:
 	done
 
 # over ride SRC_PERL for deploy and all sub targets
-deploy-scripts: SRC_PERL = $(wildcard pipeline/awecmd/*.pl)   \
-                   		   $(wildcard pipeline/bin/*.pl)
-deploy-scripts: SRC_PYTHON = $(wildcard pipeline/awecmd/*.py) \
-                     		 $(wildcard pipeline/bin/*.py)
-deploy-scripts: SRC_SH = $(wildcard pipeline/awecmd/*.sh)     \
-                 		 $(wildcard pipeline/bin/*.sh)
-deploy-scripts: SRC_UNKNOWN = $(filter-out %.sh %.py %.pl, $(wildcard pipeline/bin/*))
+deploy-scripts: SRC_PERL = $(wildcard pipeline/awecmd/*.pl) $(wildcard pipeline/bin/*.pl) SRC_PYTHON = $(wildcard pipeline/awecmd/*.py) $(wildcard pipeline/bin/*.py) SRC_SH = $(wildcard pipeline/awecmd/*.sh) $(wildcard pipeline/bin/*.sh) SRC_UNKNOWN = $(filter-out %.sh %.py %.pl, $(wildcard pipeline/bin/*))
 
 deploy-client: build-libs deploy-libs | deploy-scripts
 
