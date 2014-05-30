@@ -61,6 +61,11 @@ build-docs:
 build-update:
 	cd pipeline; git pull origin master
 
+build-devel:
+	cd pipeline; git fetch; git checkout develop; git pull origin develop
+
 update: default build-update deploy-client |
+
+update-devel: default build-devel deploy-client |
 
 include $(TOP_DIR)/tools/Makefile.common.rules
